@@ -1,0 +1,194 @@
+[
+ {
+  "word": "ESTABLISH",
+  "meaning": "Үүсгэн байгуулах, тогтоох",
+  "example": "The study established a clear relationship.",
+  "emoji": "🌳",
+  "topic": "Environment",
+  "level": 1
+ },
+ {
+  "word": "EVIDENCE",
+  "meaning": "Нотолгоо, баримт",
+  "example": "The evidence supports the main argument.",
+  "emoji": "🔎",
+  "topic": "Education",
+  "level": 1
+ },
+ {
+  "word": "ANALYZE",
+  "meaning": "Шинжлэх, дүн шинжилгээ хийх",
+  "example": "Students analyze the results carefully.",
+  "emoji": "🧠",
+  "topic": "Education",
+  "level": 1
+ },
+ {
+  "word": "FACTOR",
+  "meaning": "Хүчин зүйл",
+  "example": "Cost is an important factor in this decision.",
+  "emoji": "🧩",
+  "topic": "Business",
+  "level": 1
+ },
+ {
+  "word": "ENVIRONMENT",
+  "meaning": "Байгаль орчин",
+  "example": "The environment affects human health.",
+  "emoji": "🌎",
+  "topic": "Environment",
+  "level": 1
+ },
+ {
+  "word": "SIGNIFICANT",
+  "meaning": "Чухал, мэдэгдэхүйц",
+  "example": "The results show a significant difference.",
+  "emoji": "⭐",
+  "topic": "Science",
+  "level": 1
+ },
+ {
+  "word": "APPROACH",
+  "meaning": "Арга барил",
+  "example": "Researchers developed a new approach.",
+  "emoji": "🛤️",
+  "topic": "Education",
+  "level": 1
+ },
+ {
+  "word": "RESOURCE",
+  "meaning": "Нөөц, эх үүсвэр",
+  "example": "Water is an essential natural resource.",
+  "emoji": "💧",
+  "topic": "Environment",
+  "level": 1
+ },
+ {
+  "word": "CONSUME",
+  "meaning": "Хэрэглэх, зарцуулах",
+  "example": "Many households consume less energy now.",
+  "emoji": "⚡",
+  "topic": "Business",
+  "level": 1
+ },
+ {
+  "word": "DISTRIBUTE",
+  "meaning": "Хуваарилах, түгээх",
+  "example": "The company distributes products worldwide.",
+  "emoji": "📦",
+  "topic": "Business",
+  "level": 1
+ },
+ {
+  "word": "HYPOTHESIS",
+  "meaning": "Таамаглал",
+  "example": "The experiment tested the hypothesis.",
+  "emoji": "🔬",
+  "topic": "Science",
+  "level": 2
+ },
+ {
+  "word": "ECONOMY",
+  "meaning": "Эдийн засаг",
+  "example": "Education can strengthen the economy.",
+  "emoji": "💹",
+  "topic": "Business",
+  "level": 2
+ },
+ {
+  "word": "SUSTAINABLE",
+  "meaning": "Тогтвортой",
+  "example": "Cities need sustainable transport systems.",
+  "emoji": "♻️",
+  "topic": "Environment",
+  "level": 2
+ },
+ {
+  "word": "INTERPRET",
+  "meaning": "Тайлбарлах",
+  "example": "Scientists interpret the data in context.",
+  "emoji": "🧠",
+  "topic": "Science",
+  "level": 2
+ },
+ {
+  "word": "IMPLEMENT",
+  "meaning": "Хэрэгжүүлэх",
+  "example": "The school implemented a new policy.",
+  "emoji": "🛠️",
+  "topic": "Education",
+  "level": 2
+ },
+ {
+  "word": "ACQUISITION",
+  "meaning": "Эзэмших, олж авах үйл явц",
+  "example": "Language acquisition takes time and practice.",
+  "emoji": "📖",
+  "topic": "Education",
+  "level": 2
+ },
+ {
+  "word": "REGULATE",
+  "meaning": "Зохицуулах, хянах",
+  "example": "Governments regulate certain industries.",
+  "emoji": "⚖️",
+  "topic": "Business",
+  "level": 2
+ },
+ {
+  "word": "BIODIVERSITY",
+  "meaning": "Биологийн олон янз байдал",
+  "example": "Biodiversity helps ecosystems remain resilient.",
+  "emoji": "🦋",
+  "topic": "Environment",
+  "level": 2
+ },
+ {
+  "word": "AMBIGUOUS",
+  "meaning": "Хоёрдмол утгатай",
+  "example": "The wording of the question was ambiguous.",
+  "emoji": "❓",
+  "topic": "Education",
+  "level": 3
+ },
+ {
+  "word": "CORRELATION",
+  "meaning": "Харилцан хамаарал",
+  "example": "The study found a correlation between the variables.",
+  "emoji": "📈",
+  "topic": "Science",
+  "level": 3
+ },
+ {
+  "word": "DETERIORATE",
+  "meaning": "Муудан доройтох",
+  "example": "Air quality may deteriorate during wildfires.",
+  "emoji": "🌫️",
+  "topic": "Environment",
+  "level": 3
+ },
+ {
+  "word": "ALLOCATE",
+  "meaning": "Хуваарилах, зориулж өгөх",
+  "example": "The university allocated funds for research.",
+  "emoji": "💰",
+  "topic": "Business",
+  "level": 3
+ },
+ {
+  "word": "COMPREHENSIVE",
+  "meaning": "Цогц, иж бүрэн",
+  "example": "The report provides a comprehensive analysis.",
+  "emoji": "📚",
+  "topic": "Education",
+  "level": 3
+ },
+ {
+  "word": "MITIGATE",
+  "meaning": "Сөрөг нөлөөг бууруулах",
+  "example": "New measures can mitigate environmental damage.",
+  "emoji": "🛡️",
+  "topic": "Environment",
+  "level": 3
+ }
+]

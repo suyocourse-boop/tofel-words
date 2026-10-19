@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#8fdcff">
+<title>TOEFL Spelling Party!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2b2a5c;--soft:#6f7399;
+  --grape:#7c5cff;--grape-d:#5638d6;
+  --sun:#ffd23f;--sun-d:#e5a200;
+  --mint:#3ddc97;--mint-d:#1ca46b;
+  --berry:#ff5d8f;--berry-d:#d03468;
+  --cyan:#3cc6f4;--cyan-d:#1895c4;
+  --font:"Fredoka","Nunito","Trebuchet MS",system-ui,sans-serif;
+  --body:"Nunito","Fredoka","Trebuchet MS",system-ui,sans-serif;
+  font-family:var(--body);color:var(--ink);font-synthesis:none
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background:#8fdcff}
+body{margin:0;min-height:100vh;
+  background:linear-gradient(#8fdcff 0,#c9f0ff 38%,#fff3c4 100%) fixed;
+  padding:14px 14px calc(104px + env(safe-area-inset-bottom,0px))}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;transition:transform .12s,box-shadow .12s}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid #fff;outline-offset:2px;box-shadow:0 0 0 7px var(--grape)}
+.app{max-width:520px;margin:auto;display:flex;flex-direction:column;gap:14px}
+.hidden{display:none!important}
+
+/* ---------- top bar ---------- */
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.logo{font-family:var(--font);font-weight:700;font-size:22px;line-height:1;color:#fff;
+  text-shadow:0 3px 0 var(--grape-d),0 0 1px var(--grape-d);-webkit-text-stroke:1.5px var(--grape-d);paint-order:stroke fill}
+.chips{display:flex;gap:6px}
+.chip{display:flex;align-items:center;gap:4px;background:#fff;border-radius:99px;padding:5px 11px 5px 8px;
+  font-family:var(--font);font-weight:700;font-size:18px;box-shadow:0 4px 0 rgba(43,42,92,.18)}
+.chip b{min-width:1ch;text-align:center}
+
+/* ---------- cards ---------- */
+.card{background:#fff;border-radius:28px;box-shadow:0 7px 0 rgba(43,42,92,.16);padding:16px}
+.game{position:relative;overflow:hidden}
+
+/* ---------- map ---------- */
+.mapcard h2{margin:0 0 10px;font-family:var(--font);font-size:18px}
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.levelbtn{position:relative;background:#f1edff;border-radius:20px;padding:10px 4px 9px;
+  font-family:var(--font);font-weight:700;font-size:15px;box-shadow:0 5px 0 #cfc5ff;line-height:1.15}
+.levelbtn .ico{display:block;font-size:30px;margin-bottom:2px}
+.levelbtn.active{background:var(--grape);color:#fff;box-shadow:0 5px 0 var(--grape-d)}
+.levelbtn:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 var(--grape-d)}
+.levelbtn:disabled{background:#eceaf4;color:#a3a2b8;box-shadow:0 5px 0 #d6d3e6;cursor:not-allowed}
+.levelbtn .lock{display:none;position:absolute;top:-6px;right:-4px;font-size:20px}
+.levelbtn:disabled .lock{display:block}
+.catlabel{font-weight:900;font-size:14px;margin:14px 0 6px}
+select{width:100%;padding:12px 14px;border:3px solid #d8d3f5;border-radius:16px;background:#fff;font-weight:800;font-size:15px}
+
+/* ---------- game ---------- */
+.topline{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.badge{background:var(--sun);color:#6b4600;border-radius:99px;padding:6px 13px;font-family:var(--font);font-weight:700;font-size:15px;box-shadow:0 3px 0 var(--sun-d)}
+.small{font-size:13px;color:var(--soft);font-weight:800}
+.bar{height:16px;background:#e9e5ff;border-radius:99px;overflow:hidden}
+.bar span{display:block;height:100%;border-radius:99px;transition:width .35s;
+  background:repeating-linear-gradient(-45deg,var(--mint) 0 10px,#6ff0b8 10px 20px)}
+
+.foxrow{display:flex;align-items:flex-end;gap:10px;margin:14px 0 4px}
+.mascot{flex:none;font-size:56px;line-height:1;animation:bob 2.4s ease-in-out infinite;min-width:64px;text-align:center}
+.bubble{position:relative;flex:1;background:#f4f1ff;border-radius:20px;padding:11px 14px;min-height:50px;
+  display:flex;align-items:center;font-weight:900;font-size:15px;line-height:1.3;margin-bottom:6px}
+.bubble:after{content:"";position:absolute;left:-9px;bottom:14px;border:9px solid transparent;border-right-color:#f4f1ff;border-left:0}
+.bubble:empty:before{content:"Үсгүүдийг дарж үгээ бүтээгээрэй! 👆";color:var(--soft)}
+.bubble.pop{animation:pop .3s}
+.bubble.shake{animation:shake .4s}
+
+.prompt{text-align:center;padding:6px 0 10px}
+.picwrap{width:132px;height:132px;margin:6px auto 12px;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%,#fff 0,#fff2b8 45%,#ffd86b 100%);box-shadow:0 7px 0 var(--sun-d),inset 0 -6px 0 rgba(229,162,0,.25)}
+.picture{font-size:72px;line-height:1;animation:bob 2.4s ease-in-out infinite}
+.meaning{font-family:var(--font);font-weight:700;font-size:clamp(23px,6.4vw,30px);line-height:1.2;margin:4px 6px 12px}
+.audio{display:inline-flex;align-items:center;gap:8px;background:var(--cyan);color:#fff;border-radius:99px;padding:11px 20px;
+  font-family:var(--font);font-weight:700;font-size:17px;box-shadow:0 5px 0 var(--cyan-d)}
+.audio:active{transform:translateY(4px);box-shadow:0 1px 0 var(--cyan-d)}
+.example{font-size:14px;color:var(--soft);font-weight:700;line-height:1.5;margin:12px 6px 0;font-style:italic}
+
+/* answer slots */
+.answer{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin:6px 0 4px;min-height:52px}
+.slot{width:40px;height:50px;border-radius:13px;border:3px dashed #cfc7ee;background:#faf8ff;
+  display:grid;place-items:center;font-family:var(--font);font-weight:700;font-size:26px;color:#6b4600}
+.slot.filled{border:3px solid var(--sun-d);background:var(--sun);box-shadow:0 4px 0 var(--sun-d);animation:pop .22s}
+.slot.good{background:var(--mint);border-color:var(--mint-d);box-shadow:0 4px 0 var(--mint-d);color:#fff}
+.shakeit{animation:shake .4s}
+
+/* letter tiles: candy buttons */
+.tiles{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin:16px 0 14px}
+.tile{width:52px;height:58px;border-radius:16px;font-family:var(--font);font-weight:700;font-size:28px;color:#fff;
+  background:var(--cyan);box-shadow:0 6px 0 var(--cyan-d);animation:pop .35s both;animation-delay:calc(var(--i)*35ms)}
+.tile:nth-child(4n+2){background:var(--berry);box-shadow:0 6px 0 var(--berry-d)}
+.tile:nth-child(4n+3){background:var(--mint);box-shadow:0 6px 0 var(--mint-d)}
+.tile:nth-child(4n){background:var(--grape);box-shadow:0 6px 0 var(--grape-d)}
+.tile:active:not(:disabled){transform:translateY(5px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+.tile:disabled{opacity:.22;box-shadow:none;transform:translateY(4px);cursor:default}
+
+.actions{display:flex;gap:10px}
+.btn{border-radius:20px;padding:15px 20px;font-family:var(--font);font-weight:700;font-size:19px;color:#fff;
+  background:var(--mint);box-shadow:0 6px 0 var(--mint-d)}
+.btn:active:not(:disabled){transform:translateY(5px);box-shadow:0 1px 0 var(--mint-d)}
+.btn:disabled{background:#cfd3de;box-shadow:0 6px 0 #b4b9c8;cursor:default}
+.btn.sun{background:var(--sun);color:#6b4600;box-shadow:0 6px 0 var(--sun-d)}
+.btn.sun:active{box-shadow:0 1px 0 var(--sun-d)}
+.btn.ghost{background:#fff;color:var(--ink);border:3px solid #ddd8f3;box-shadow:0 5px 0 #ddd8f3;padding:12px 16px;font-size:17px}
+.btn.wide{width:100%}
+.wordinput{width:100%;border:4px solid #cfeaf9;border-radius:20px;padding:15px;text-align:center;font-family:var(--font);font-weight:700;
+  font-size:28px;text-transform:uppercase;letter-spacing:2px;background:#f4fbff;outline:none}
+.wordinput:focus{border-color:var(--cyan)}
+.nextwrap{margin-top:12px}
+.finish{text-align:center;padding:6px 0}
+.finish .trophy{font-size:72px;animation:pop .5s}
+.finish h3{font-family:var(--font);font-size:30px;margin:6px 0}
+
+/* ---------- flashcards ---------- */
+.flashwrap{perspective:1000px;margin:16px 0 14px}
+.flash{display:block;width:100%;height:290px;background:none;box-shadow:none;position:relative;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.3,1.3,.5,1);border-radius:28px}
+.flash.flipped{transform:rotateY(180deg)}
+.flash:active{transform:scale(.98)}
+.flash.flipped:active{transform:rotateY(180deg) scale(.98)}
+.face{position:absolute;inset:0;border-radius:28px;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:18px;text-align:center}
+.face.front{background:linear-gradient(160deg,#9b83ff,var(--grape));color:#fff;box-shadow:0 8px 0 var(--grape-d)}
+.face.back{background:linear-gradient(160deg,#fff,#fff6d1);transform:rotateY(180deg);box-shadow:0 8px 0 var(--sun-d);border:4px solid var(--sun)}
+.face .em{font-size:76px;line-height:1}
+.face .en{font-family:var(--font);font-weight:700;font-size:clamp(26px,8vw,38px);letter-spacing:1px;word-break:break-word}
+.face .tapme{font-size:13px;font-weight:900;opacity:.85}
+.face .mn{font-family:var(--font);font-weight:700;font-size:clamp(24px,7vw,32px);line-height:1.2}
+.face .ex{font-size:14px;font-weight:700;color:var(--soft);font-style:italic;line-height:1.45}
+.face .tag{display:inline-block;background:var(--mint);color:#fff;border-radius:99px;padding:3px 11px;font-family:var(--font);font-weight:600;font-size:13px;margin-bottom:2px}
+.flashrow{display:flex;gap:10px;align-items:center;justify-content:center;margin-bottom:12px}
+.btn.round{width:54px;height:54px;padding:0;border-radius:50%;font-size:22px;display:grid;place-items:center;flex:none}
+.btn.berry{background:var(--berry);box-shadow:0 6px 0 var(--berry-d)}
+.btn.berry:active{box-shadow:0 1px 0 var(--berry-d)}
+.deckdone{text-align:center;padding:26px 6px}
+.deckdone .trophy{font-size:72px}
+.deckdone h3{font-family:var(--font);font-size:28px;margin:6px 0}
+
+/* ---------- foxy corner ---------- */
+.corner h2{margin:0 0 8px;font-family:var(--font);font-size:18px}
+.cornerrow{display:flex;align-items:center;gap:12px}
+.cornerrow .fox{font-size:46px}
+.trickycount{display:inline-block;background:#fff1c9;padding:7px 12px;border-radius:99px;font-weight:900;font-size:14px;margin:12px 0 4px}
+.trickywords{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px}
+.trickyword{font-family:var(--font);font-weight:600;font-size:14px;background:#ffe3ec;color:var(--berry-d);padding:5px 10px;border-radius:99px}
+.motto{background:#e6fbef;text-align:center;font-weight:900;line-height:1.5}
+
+/* ---------- sponsor ads ---------- */
+.ad{--c:#7c5cff;position:relative;display:flex;border-radius:24px;background:var(--c);color:#fff;text-align:left;
+  box-shadow:0 6px 0 rgba(43,42,92,.25);animation:adin .5s both;font-family:var(--body)}
+.ad:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(43,42,92,.25)}
+.ad .adtag{position:absolute;top:8px;right:10px;background:rgba(255,255,255,.92);color:var(--ink);border-radius:99px;padding:2px 9px;font-size:11px;font-weight:900}
+.ad .ademo{line-height:1}
+.ad .adname{font-family:var(--font);font-weight:700;line-height:1.15}
+.ad .adtext{font-weight:800;line-height:1.35;opacity:.95}
+.ad .adgo{display:inline-block;background:#fff;color:var(--ink);border-radius:99px;padding:7px 14px;font-family:var(--font);font-weight:700;font-size:14px}
+.ad.bar{align-items:center;gap:12px;padding:12px 14px;width:100%}
+.ad.bar .ademo{font-size:34px}
+.ad.bar .adname{font-size:16px;display:block;padding-right:50px}
+.ad.bar .adtext{font-size:13px;display:block}
+.ad.side{flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:30px 14px 20px;min-height:360px}
+.ad.side .ademo{font-size:68px}
+.ad.side .adname{font-size:20px}
+.ad.side .adtext{font-size:14px}
+.adslot.top{min-height:70px}
+.sidead{display:none;position:fixed;top:92px;width:178px;z-index:3}
+@keyframes adin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(min-width:980px){
+  .sidead{display:block}
+  .sidead.left{left:calc(50% - 260px - 202px)}
+  .sidead.right{right:calc(50% - 260px - 202px)}
+  .adslot.top{display:none}
+}
+.adnote{font-size:12px;font-weight:800;color:var(--soft);line-height:1.5}
+.linkbtn{background:none;box-shadow:none;color:var(--grape-d);font-weight:900;font-size:13px;text-decoration:underline;padding:4px}
+
+/* parent gate */
+.gate{position:fixed;inset:0;z-index:50;background:rgba(43,42,92,.6);display:grid;place-items:center;padding:20px}
+.gatebox{background:#fff;border-radius:28px;box-shadow:0 8px 0 rgba(43,42,92,.25);padding:22px;max-width:340px;width:100%;text-align:center;animation:pop .3s}
+.gatebox h3{font-family:var(--font);font-size:22px;margin:0 0 6px}
+.gatebox p{margin:0 0 12px;font-size:14px;font-weight:800;color:var(--soft);line-height:1.45}
+.gatebox .q{font-family:var(--font);font-weight:700;font-size:30px;margin:6px 0}
+.gatebox .wordinput{font-size:26px;text-transform:none;letter-spacing:0}
+.gatebox .actions{margin-top:14px}
+
+/* ---------- bottom nav ---------- */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;
+  padding:8px 12px calc(10px + env(safe-area-inset-bottom,0px));
+  background:linear-gradient(transparent,rgba(255,243,196,.9) 40%)}
+.navin{display:flex;gap:8px;width:100%;max-width:520px;background:#fff;border-radius:26px;padding:8px;box-shadow:0 6px 0 rgba(43,42,92,.18),0 0 0 3px #fff}
+.tab{flex:1;border-radius:18px;background:transparent;padding:7px 2px 6px;font-family:var(--font);font-weight:600;font-size:13px;color:var(--soft);line-height:1.2}
+.tab .ico{display:block;font-size:26px}
+.tab.active{background:var(--grape);color:#fff;box-shadow:0 4px 0 var(--grape-d)}
+.tab:active{transform:scale(.95)}
+
+.confetti{position:absolute;pointer-events:none;top:-10px;font-size:26px;animation:fall 1.3s ease-in forwards;z-index:5}
+footer{text-align:center;color:#6f7399;font-size:13px;font-weight:800}
+
+@keyframes bob{50%{transform:translateY(-7px) rotate(3deg)}}
+@keyframes pop{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+@keyframes fall{to{transform:translateY(520px) rotate(520deg);opacity:0}}
+@media(max-width:380px){.tile{width:46px;height:54px;font-size:25px}.slot{width:34px;height:44px;font-size:22px}.logo{font-size:19px}.chip{font-size:16px;padding:4px 8px 4px 6px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+<header class="top">
+  <div class="logo">🎈 Spelling Party</div>
+  <div class="chips">
+    <div class="chip" title="Од">⭐<b id="stars">0</b></div>
+    <div class="chip" title="Цуврал">🔥<b id="streak">0</b></div>
+    <div class="chip" title="Зөв үг">🏆<b id="correct">0</b></div>
+  </div>
+</header>
+
+<div class="adslot top" id="adTop" aria-label="Зар"></div>
+
+<section class="card mapcard">
+  <h2>🗺️ Үгийн аялал</h2>
+  <div class="levels">
+    <button class="levelbtn active" data-level="1"><span class="ico">🌱</span>Level 1<span class="lock">🔒</span></button>
+    <button class="levelbtn" data-level="2"><span class="ico">🚀</span>Level 2<span class="lock">🔒</span></button>
+    <button class="levelbtn" data-level="3"><span class="ico">🧠</span>Level 3<span class="lock">🔒</span></button>
+  </div>
+  <div class="catlabel">🎨 Үгийн сэдэв</div>
+  <select id="category" aria-label="Үгийн сэдэв"><option value="all">Бүх сэдэв</option><option value="Environment">🌿 Байгаль орчин</option><option value="Business">💼 Бизнес</option><option value="Science">🔬 Шинжлэх ухаан</option><option value="Education">🎓 Боловсрол</option></select>
+</section>
+
+<main class="card game" id="game">
+  <div class="topline"><span class="badge" id="leveltag">🌱 Level 1</span><span class="small" id="progress">Үг 1 / 10</span></div>
+  <div class="bar"><span id="bar" style="width:0%"></span></div>
+
+  <div class="foxrow">
+    <div class="mascot" id="mascot" aria-label="Foxy үнэг">🦊</div>
+    <div class="bubble" id="feedback" aria-live="polite"></div>
+  </div>
+
+  <section class="prompt">
+    <div class="picwrap"><div class="picture" id="picture">🌳</div></div>
+    <div class="meaning" id="meaning">Үүсгэн байгуулах, тогтоох</div>
+    <button class="audio" id="audio" type="button">🔊 Үгийг сонсох</button>
+    <div class="example" id="example">The study established a clear relationship.</div>
+  </section>
+
+  <section id="tilesarea">
+    <div class="answer" id="answer" aria-label="Сонгосон үсгүүд"></div>
+    <div class="tiles" id="tiles"></div>
+    <div class="actions">
+      <button class="btn ghost" id="clear" type="button">↩ Буцаах</button>
+      <button class="btn" id="check" type="button" style="flex:1">Шалгах! ✨</button>
+    </div>
+  </section>
+
+  <section id="typearea" class="hidden">
+    <input id="input" class="wordinput" placeholder="Үгээ бич..." autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Англи үгээ бичнэ үү">
+    <button class="btn wide" id="typecheck" type="button" style="margin-top:14px">Шалгах! ⭐</button>
+  </section>
+
+  <div class="nextwrap hidden" id="nextwrap"><button class="btn sun wide" id="next" type="button">Дараагийн үг ➜</button></div>
+
+  <section id="finish" class="finish hidden">
+    <div class="trophy">🏆🎊</div>
+    <h3>Чи чадлаа!</h3>
+    <p id="result" class="small"></p>
+    <button class="btn sun wide" id="again" type="button">Дахин тоглох ↻</button>
+  </section>
+</main>
+
+<section class="card game hidden" id="cardsview">
+  <div class="topline"><span class="badge" id="cardtag">🃏 Флашкард</span><span class="small" id="cardprogress">1 / 8</span></div>
+  <div class="bar"><span id="cardbar" style="width:0%"></span></div>
+  <div id="deckarea">
+    <div class="flashwrap">
+      <button class="flash" id="flash" type="button" aria-label="Картыг эргүүлэх">
+        <div class="face front"><div class="em" id="fcEmoji">🌳</div><div class="en" id="fcWord">ESTABLISH</div><div class="tapme">👆 Дарж эргүүл</div></div>
+        <div class="face back"><div class="tag hidden" id="fcKnown">✅ Мэддэг</div><div class="mn" id="fcMeaning"></div><div class="ex" id="fcExample"></div></div>
+      </button>
+    </div>
+    <div class="flashrow">
+      <button class="btn ghost round" id="cprev" type="button" aria-label="Өмнөх">⬅</button>
+      <button class="audio" id="caudio" type="button">🔊 Сонсох</button>
+      <button class="btn ghost round" id="cshuffle" type="button" aria-label="Холих">🔀</button>
+    </div>
+    <div class="actions">
+      <button class="btn berry" id="cagain" type="button" style="flex:1">🔁 Дахин үзнэ</button>
+      <button class="btn" id="cknow" type="button" style="flex:1">✅ Мэднэ!</button>
+    </div>
+    <div class="small" style="text-align:center;margin-top:12px" id="cardstat"></div>
+  </div>
+  <div class="deckdone hidden" id="deckdone">
+    <div class="trophy">🎊🃏</div><h3>Бүх картыг үзлээ!</h3>
+    <p class="small" id="deckresult"></p>
+    <button class="btn sun wide" id="deckagain" type="button">Дахин эхлэх ↻</button>
+  </div>
+</section>
+
+<section class="card corner">
+  <h2>🧸 Найз Foxy</h2>
+  <div class="cornerrow"><span class="fox">🦊</span><div class="small" style="line-height:1.5">Алдсан үгээ дахин давтаарай. Алхам бүр чамайг TOEFL-д ойртуулна!</div></div>
+  <div class="trickycount">💛 Давтах үг: <span id="trickycount">0</span></div>
+  <div class="trickywords" id="trickywords"></div>
+  <button class="btn ghost wide" id="practice" type="button">Алдсан үгээ давтах ↻</button>
+</section>
+
+<section class="card motto">🌈 Өнөөдрийн уриа<br>“Алдаа бол суралцах нэг алхам!” 💚</section>
+<footer>🌟 Practice a little. Shine a lot. 🌟
+  <div class="adnote">Энэ апп үнэгүй. Түнш байгууллагуудын зараар дэмжигддэг. Хувийн мэдээлэл цуглуулдаггүй.<br>
+  <button class="linkbtn" id="adWith" type="button">📣 Зар байршуулах</button></div>
+</footer>
+</div>
+
+<aside class="sidead left" id="adL" aria-label="Зар"></aside>
+<aside class="sidead right" id="adR" aria-label="Зар"></aside>
+
+<div class="gate hidden" id="gate" role="dialog" aria-modal="true" aria-labelledby="gatetitle">
+  <div class="gatebox">
+    <div style="font-size:44px">👨‍👩‍👧</div>
+    <h3 id="gatetitle">Эцэг эхэд зориулсан</h3>
+    <p>Гадаад холбоос руу орохын өмнө асуултад хариулна уу.</p>
+    <div class="q" id="gateq">7 + 5 = ?</div>
+    <input id="gatein" class="wordinput" type="number" inputmode="numeric" autocomplete="off" aria-label="Хариулт">
+    <div class="small" id="gatemsg" style="min-height:20px;margin-top:6px"></div>
+    <div class="actions"><button class="btn ghost" id="gateno" type="button">Болих</button><button class="btn" id="gateok" type="button" style="flex:1">Нээх</button></div>
+  </div>
+</div>
+
+<nav class="nav" aria-label="Тоглоомын горим"><div class="navin">
+  <button class="tab active" data-mode="tiles" type="button"><span class="ico">🧩</span>Үсэг өрөх</button>
+  <button class="tab" data-mode="typing" type="button"><span class="ico">✏️</span>Бичих</button>
+  <button class="tab" data-mode="timer" type="button"><span class="ico">⏱️</span>Сорил</button>
+  <button class="tab" data-mode="cards" type="button"><span class="ico">🃏</span>Флашкард</button>
+</div></nav>
+
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const DEFAULT_WORDS = [
+['ESTABLISH','Үүсгэн байгуулах, тогтоох','The study established a clear relationship.','🌳','Environment',1],
+['EVIDENCE','Нотолгоо, баримт','The evidence supports the main argument.','🔎','Education',1],
+['ANALYZE','Шинжлэх, дүн шинжилгээ хийх','Students analyze the results carefully.','🧠','Education',1],
+['FACTOR','Хүчин зүйл','Cost is an important factor in this decision.','🧩','Business',1],
+['ENVIRONMENT','Байгаль орчин','The environment affects human health.','🌎','Environment',1],
+['SIGNIFICANT','Чухал, мэдэгдэхүйц','The results show a significant difference.','⭐','Science',1],
+['APPROACH','Арга барил','Researchers developed a new approach.','🛤️','Education',1],
+['RESOURCE','Нөөц, эх үүсвэр','Water is an essential natural resource.','💧','Environment',1],
+['CONSUME','Хэрэглэх, зарцуулах','Many households consume less energy now.','⚡','Business',1],
+['DISTRIBUTE','Хуваарилах, түгээх','The company distributes products worldwide.','📦','Business',1],
+['HYPOTHESIS','Таамаглал','The experiment tested the hypothesis.','🔬','Science',2],
+['ECONOMY','Эдийн засаг','Education can strengthen the economy.','💹','Business',2],
+['SUSTAINABLE','Тогтвортой','Cities need sustainable transport systems.','♻️','Environment',2],
+['INTERPRET','Тайлбарлах','Scientists interpret the data in context.','🧠','Science',2],
+['IMPLEMENT','Хэрэгжүүлэх','The school implemented a new policy.','🛠️','Education',2],
+['ACQUISITION','Эзэмших, олж авах үйл явц','Language acquisition takes time and practice.','📖','Education',2],
+['REGULATE','Зохицуулах, хянах','Governments regulate certain industries.','⚖️','Business',2],
+['BIODIVERSITY','Биологийн олон янз байдал','Biodiversity helps ecosystems remain resilient.','🦋','Environment',2],
+['AMBIGUOUS','Хоёрдмол утгатай','The wording of the question was ambiguous.','❓','Education',3],
+['CORRELATION','Харилцан хамаарал','The study found a correlation between the variables.','📈','Science',3],
+['DETERIORATE','Муудан доройтох','Air quality may deteriorate during wildfires.','🌫️','Environment',3],
+['ALLOCATE','Хуваарилах, зориулж өгөх','The university allocated funds for research.','💰','Business',3],
+['COMPREHENSIVE','Цогц, иж бүрэн','The report provides a comprehensive analysis.','📚','Education',3],
+['MITIGATE','Сөрөг нөлөөг бууруулах','New measures can mitigate environmental damage.','🛡️','Environment',3]
+];
+/* ---------- үгийн өгөгдөл: words.json-оос татна ---------- */
+/* Ижил репо/сайт дотор бол 'words.json'. Тусдаа репо бол бүтэн хаяг:
+   'https://raw.githubusercontent.com/НЭР/РЕПО/main/words.json' */
+const WORDS_URL='words.json';
+let WORDS=DEFAULT_WORDS;  // татаж чадахгүй бол энэ жагсаалтаар ажиллана
+function parseWords(data){
+  if(!Array.isArray(data))return null;
+  const topics=['Environment','Business','Science','Education'],out=[];
+  for(const d of data){
+    if(!d||typeof d!=='object')continue;
+    const w=String(d.word||'').trim().toUpperCase(),lvl=Number(d.level);
+    if(!/^[A-Z]{2,20}$/.test(w)||![1,2,3].includes(lvl)||!d.meaning)continue;
+    out.push([w,String(d.meaning),String(d.example||''),String(d.emoji||'⭐'),topics.includes(d.topic)?d.topic:'Education',lvl]);
+  }
+  return out.length>=5?out:null;
+}
+async function loadWords(){
+  try{
+    const ctrl=new AbortController(),t=setTimeout(()=>ctrl.abort(),4000);
+    const r=await fetch(WORDS_URL,{cache:'no-cache',signal:ctrl.signal});clearTimeout(t);
+    if(!r.ok)throw new Error('http');
+    const parsed=parseWords(await r.json());if(!parsed)throw new Error('format');
+    WORDS=parsed;
+    try{localStorage.setItem('toefl-party-words',JSON.stringify(parsed));}catch{}
+  }catch{
+    try{const c=JSON.parse(localStorage.getItem('toefl-party-words')||'null');if(Array.isArray(c)&&c.length>=5)WORDS=c;}catch{}
+  }
+}
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem('toefl-party-v1') || '{}'); } catch {}
+let stars=saved.stars||0, correct=saved.correct||0, streak=saved.streak||0;
+let tricky=Array.isArray(saved.tricky)?saved.tricky:[], unlocked=saved.unlocked||1;
+let known=Array.isArray(saved.known)?saved.known:[], deck=[], ci=0;
+let level=1, mode='tiles', round=[], index=0, current=null, chosen=[], attempted=false;
+let ended=false, practiceMode=false, sessionCorrect=0, timer=null, seconds=60;
+
+function save(){try{localStorage.setItem('toefl-party-v1',JSON.stringify({stars,correct,streak,tricky,unlocked,known}));}catch{}}
+function shuffle(a){return a.slice().sort(()=>Math.random()-.5);}
+function getPool(){return WORDS.filter(w=>w[5]===level&&($('category').value==='all'||w[4]===$('category').value));}
+function say(text,color,anim){
+  const f=$('feedback');f.textContent=text;f.style.color=color||'';
+  f.classList.remove('pop','shake');void f.offsetWidth;if(anim)f.classList.add(anim);
+}
+function showView(){$('game').classList.toggle('hidden',mode==='cards');$('cardsview').classList.toggle('hidden',mode!=='cards');}
+function setMode(m){mode=m;document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('active',x.dataset.mode===m));}
+function startRound(){
+  stopTimer(); practiceMode=false; showView();
+  if(mode==='cards'){initCards();return;}
+  round=shuffle(getPool());
+  if(!round.length) round=shuffle(WORDS.filter(w=>w[5]===level));
+  round=round.slice(0,10); index=0; sessionCorrect=0; ended=false; renderWord();
+}
+/* shared setup for a normal or practice word */
+function setupWord(){
+  chosen=[]; attempted=false;
+  $('finish').classList.add('hidden');$('nextwrap').classList.add('hidden');
+  $('tilesarea').classList.toggle('hidden',mode==='typing');$('typearea').classList.toggle('hidden',mode!=='typing');
+  say('');$('mascot').textContent='🦊';
+  $('picture').textContent=current[3];$('meaning').textContent=current[1];$('example').textContent='“'+current[2]+'”';
+  $('input').value='';$('input').disabled=false;$('check').disabled=false;$('typecheck').disabled=false;
+  $('answer').innerHTML='';
+  current[0].split('').forEach(()=>{const s=document.createElement('span');s.className='slot';$('answer').appendChild(s);});
+  $('tiles').innerHTML='';
+  shuffle(current[0].split('')).forEach((letter,i)=>{
+    const b=document.createElement('button');b.className='tile';b.textContent=letter;b.type='button';b.style.setProperty('--i',i);
+    b.addEventListener('click',()=>{
+      if(attempted||b.disabled)return;
+      b.disabled=true;chosen.push({letter,button:b});
+      const slot=$('answer').children[chosen.length-1];slot.textContent=letter;slot.classList.add('filled');
+      if(chosen.length===current[0].length) checkAnswer();
+    });
+    $('tiles').appendChild(b);
+  });
+}
+function resetTiles(){
+  chosen=[];
+  [...$('answer').children].forEach(s=>{s.textContent='';s.className='slot';});
+  $('tiles').querySelectorAll('button').forEach(b=>b.disabled=false);
+}
+function renderWord(){
+  stopTimer();
+  if(index>=round.length){finish();return;}
+  current=round[index]; setupWord();
+  $('progress').textContent=`Үг ${index+1} / ${round.length}`;$('bar').style.width=(index/round.length*100)+'%';
+  $('leveltag').textContent=['','🌱 Level 1','🚀 Level 2','🧠 Level 3'][level];
+  updateStats();
+  if(mode==='timer'){
+    seconds=60;$('progress').textContent=`⏱️ ${seconds} сек`;
+    timer=setInterval(()=>{seconds--;$('progress').textContent=`⏱️ ${seconds} сек`;if(seconds<=0)finish();},1000);
+  }
+}
+function renderPracticeWord(){
+  if(index>=round.length){finish();return;}
+  current=round[index]; setupWord();
+  $('progress').textContent=`Давтлага ${index+1} / ${round.length}`;
+  $('bar').style.width=(index/round.length*100)+'%';
+}
+function celebrate(){
+  const symbols=['⭐','🎉','✨','💛','🌈','🎈'];
+  for(let i=0;i<20;i++){
+    const s=document.createElement('span');s.className='confetti';s.textContent=symbols[i%symbols.length];
+    s.style.left=(Math.random()*92)+'%';s.style.animationDelay=(Math.random()*.4)+'s';
+    (mode==='cards'?$('cardsview'):$('game')).appendChild(s);setTimeout(()=>s.remove(),1800);
+  }
+}
+function checkAnswer(){
+  if(attempted||ended)return;
+  const typing=mode==='typing';
+  const answer=typing ? $('input').value.trim().toUpperCase() : chosen.map(x=>x.letter).join('');
+  if(!answer){say('Үсгээ сонгоод үзээрэй 😊','#a56a00','pop');return;}
+  if(!typing&&answer.length<current[0].length){say(`Үг ${current[0].length} үсэгтэй. Үлдсэн үсгүүдээ дараарай! 😊`,'#a56a00','pop');return;}
+  if(answer===current[0]){
+    attempted=true;sessionCorrect++;correct++;stars+=3;streak++;
+    tricky=tricky.filter(w=>w!==current[0]);
+    if(level===unlocked&&index>=4)unlocked=Math.min(3,level+1);
+    say(streak>=3?`🔥 ${streak} дараалсан зөв! Гайхалтай! +3 ⭐`:'🎉 Зөв! Foxy чамаар бахархаж байна! +3 ⭐','#16864f','pop');
+    $('mascot').textContent=streak>=3?'🦊🎉':'🦊💖';
+    [...$('answer').children].forEach((s,i)=>{s.classList.add('good');s.style.animation='pop .3s both';s.style.animationDelay=(i*50)+'ms';});
+    celebrate();$('nextwrap').classList.remove('hidden');$('next').textContent=index===round.length-1?'Шагналаа харах 🏆':'Дараагийн үг ➜';
+    $('check').disabled=true;$('typecheck').disabled=true;$('input').disabled=true;
+    playTone(true);save();updateStats();renderTricky();
+    if(mode==='timer')setTimeout(()=>{if(!ended&&mode==='timer')nextWord();},700);
+  }else{
+    streak=0;if(!tricky.includes(current[0]))tricky.push(current[0]);
+    say('💛 Бараг боллоо! Дахин оролдоорой, чи чадна!','#a56a00','shake');$('mascot').textContent='🦊💪';
+    const target=typing?$('input'):$('answer');target.classList.remove('shakeit');void target.offsetWidth;target.classList.add('shakeit');
+    if(!typing){const w=current;setTimeout(()=>{if(!attempted&&current===w)resetTiles();},900);}
+    playTone(false);save();updateStats();renderTricky();
+  }
+}
+function nextWord(){stopTimer();index++;if(index>=round.length)finish();else if(practiceMode)renderPracticeWord();else renderWord();}
+function finish(){
+  if(ended)return;ended=true;stopTimer();
+  $('tilesarea').classList.add('hidden');$('typearea').classList.add('hidden');$('nextwrap').classList.add('hidden');
+  $('finish').classList.remove('hidden');$('progress').textContent='🎉 Дууслаа!';$('bar').style.width='100%';
+  $('result').textContent=`Зөв хариулт: ${sessionCorrect} · Энэ тоглолтын од: ${sessionCorrect*3} ⭐`;say('Гайхалтай ажилласан! 🎊','#16864f','pop');$('mascot').textContent='🦊🏆';
+  celebrate();
+}
+function stopTimer(){if(timer){clearInterval(timer);timer=null;}}
+function updateStats(){$('stars').textContent=stars;$('streak').textContent=streak;$('correct').textContent=correct;document.querySelectorAll('[data-level]').forEach(b=>{const n=Number(b.dataset.level);b.disabled=n>unlocked;b.classList.toggle('active',n===level);});}
+function renderTricky(){
+  $('trickycount').textContent=tricky.length;$('trickywords').innerHTML='';
+  tricky.slice(0,8).forEach(word=>{const s=document.createElement('span');s.className='trickyword';s.textContent=word;$('trickywords').appendChild(s);});
+}
+function playTone(ok){try{const c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='triangle';o.frequency.value=ok?740:230;g.gain.value=.05;o.start();if(ok)o.frequency.setValueAtTime(988,c.currentTime+.1);o.stop(c.currentTime+(ok?.24:.14));o.onended=()=>c.close();}catch{}}
+function speak(word){if(!('speechSynthesis'in window)){say('Энэ браузер дуудлага унших боломжгүй байна.','','pop');return;}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(word||current[0]);u.lang='en-US';u.rate=.82;speechSynthesis.speak(u);}
+
+$('audio').addEventListener('click',()=>speak());
+$('check').addEventListener('click',checkAnswer);$('typecheck').addEventListener('click',checkAnswer);
+$('input').addEventListener('keydown',e=>{if(e.key==='Enter')checkAnswer();});
+$('clear').addEventListener('click',()=>{
+  if(attempted||!chosen.length)return;
+  const last=chosen.pop();last.button.disabled=false;
+  const slot=$('answer').children[chosen.length];slot.textContent='';slot.className='slot';say('');
+});
+$('next').addEventListener('click',nextWord);$('again').addEventListener('click',startRound);
+$('category').addEventListener('change',startRound);
+document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{setMode(b.dataset.mode);startRound();}));
+document.querySelectorAll('[data-level]').forEach(b=>b.addEventListener('click',()=>{const n=Number(b.dataset.level);if(n>unlocked)return;level=n;startRound();}));
+$('practice').addEventListener('click',()=>{
+  const mistakes=WORDS.filter(w=>tricky.includes(w[0]));
+  if(!mistakes.length){say('🌟 Одоогоор алдсан үг алга. Эхлээд тоглоорой!','','pop');window.scrollTo({top:$('game').offsetTop-10,behavior:'smooth'});return;}
+  if(mode==='cards'){setMode('tiles');showView();}
+  stopTimer();practiceMode=true;round=shuffle(mistakes);index=0;sessionCorrect=0;ended=false;renderPracticeWord();
+  window.scrollTo({top:$('game').offsetTop-10,behavior:'smooth'});
+});
+
+/* ---------- flashcards ---------- */
+function initCards(){
+  let pool=getPool();if(!pool.length)pool=WORDS.filter(w=>w[5]===level);
+  deck=pool.slice();ci=0;$('leveltag').textContent=['','🌱 Level 1','🚀 Level 2','🧠 Level 3'][level];
+  renderCard();
+}
+function renderCard(){
+  const done=ci>=deck.length;
+  $('deckarea').classList.toggle('hidden',done);$('deckdone').classList.toggle('hidden',!done);
+  $('cardtag').textContent='🃏 '+['','Level 1','Level 2','Level 3'][level];
+  $('cardbar').style.width=(Math.min(ci,deck.length)/deck.length*100)+'%';
+  const knownHere=deck.filter(w=>known.includes(w[0])).length;
+  if(done){
+    $('cardprogress').textContent='🎉 Дууслаа!';
+    $('deckresult').textContent=`Мэддэг үг: ${knownHere} / ${deck.length}`+(knownHere<deck.length?' · Үлдсэнийг дахин давтаарай!':' · Бүгдийг мэддэг боллоо! 🌟');
+    celebrate();return;
+  }
+  const w=deck[ci];
+  $('cardprogress').textContent=`${ci+1} / ${deck.length}`;
+  $('flash').classList.remove('flipped');
+  $('fcEmoji').textContent=w[3];$('fcWord').textContent=w[0];
+  $('fcMeaning').textContent=w[1];$('fcExample').textContent='“'+w[2]+'”';
+  $('fcKnown').classList.toggle('hidden',!known.includes(w[0]));
+  $('cardstat').textContent=`✅ Мэддэг үг: ${knownHere} / ${deck.length}`;
+}
+function cardGo(d){ci=Math.max(0,Math.min(deck.length,ci+d));renderCard();}
+$('flash').addEventListener('click',()=>$('flash').classList.toggle('flipped'));
+$('caudio').addEventListener('click',()=>{if(deck[ci])speak(deck[ci][0]);});
+$('cprev').addEventListener('click',()=>{if(ci>0)cardGo(-1);});
+$('cshuffle').addEventListener('click',()=>{deck=shuffle(deck);ci=0;renderCard();});
+$('cknow').addEventListener('click',()=>{
+  const w=deck[ci];if(!w)return;
+  if(!known.includes(w[0])){known.push(w[0]);stars+=1;}
+  tricky=tricky.filter(x=>x!==w[0]);
+  save();updateStats();renderTricky();playTone(true);cardGo(1);
+});
+$('cagain').addEventListener('click',()=>{
+  const w=deck[ci];if(!w)return;
+  known=known.filter(x=>x!==w[0]);if(!tricky.includes(w[0]))tricky.push(w[0]);
+  deck.push(deck.splice(ci,1)[0]);   // send to the end of the deck
+  save();renderTricky();renderCard();
+});
+$('deckagain').addEventListener('click',()=>{deck=shuffle(deck);ci=0;renderCard();});
+
+/* ---------- sponsor ads ---------- */
+/* Зарыг энд засна: sponsors жагсаалтад байгууллага нэмэх/устгах. contact хаягаа солиорой. */
+const AD={
+  contact:'ads@example.com',
+  rotateMs:12000,
+  sponsors:[
+    {name:'Жишээ: Номын дэлгүүр',tagline:'Хүүхдийн англи номын 20% хямдрал',emoji:'📚',color:'#d03468',url:'https://example.com'},
+    {name:'Жишээ: Хэлний төв',tagline:'Англи хэлний зуны анги бүртгэж байна',emoji:'🏫',color:'#1479a3',url:'https://example.com'},
+    {name:'Жишээ: Цэнгээний парк',tagline:'Гэр бүлээрээ амралтын өдөр',emoji:'🎡',color:'#12915a',url:'https://example.com'},
+    {name:'Жишээ: Жимсний цайны газар',tagline:'Эрүүл амттан, шинэхэн жүүс',emoji:'🍎',color:'#c46a00',url:'https://example.com'}
+  ]
+};
+const AD_CTA={name:'Таны зар энд!',tagline:'Байгууллагаа гэр бүлүүдэд танилцуул',emoji:'📣',color:'#6a4cf0',url:'mailto:'+AD.contact+'?subject='+encodeURIComponent('Spelling Party: зар байршуулах'),cta:true};
+const ADS=[...AD.sponsors,AD_CTA];
+let adIdx=0;
+function adNode(sp,kind){
+  const b=document.createElement('button');b.type='button';b.className='ad '+kind;b.style.setProperty('--c',sp.color);
+  b.setAttribute('aria-label',(sp.cta?'Зар байршуулах: ':'Зар: ')+sp.name);
+  const mk=(cls,txt,tag='span')=>{const e=document.createElement(tag);e.className=cls;e.textContent=txt;return e;};
+  const tag=mk('adtag',sp.cta?'Зар байршуулах':'Зар');
+  const emo=mk('ademo',sp.emoji);
+  const wrap=document.createElement('span');
+  wrap.append(mk('adname',sp.name),mk('adtext',sp.tagline));
+  if(kind==='side'){b.append(tag,emo,mk('adname',sp.name),mk('adtext',sp.tagline),mk('adgo',sp.cta?'Холбогдох ➜':'Дэлгэрэнгүй ➜'));}
+  else{b.append(tag,emo,wrap);}
+  b.addEventListener('click',()=>openGate(sp.url));
+  return b;
+}
+function renderAds(){
+  const n=ADS.length;
+  [['adL','side',0],['adR','side',2],['adTop','bar',1]].forEach(([id,kind,off])=>{
+    const el=$(id);el.innerHTML='';el.appendChild(adNode(ADS[(adIdx+off)%n],kind));
+  });
+}
+/* parent gate: гадаад холбоосыг зөвхөн насанд хүрэгчид нээнэ */
+let gateUrl='',gateAns=0;
+function openGate(url){
+  const a=3+Math.floor(Math.random()*7),b=3+Math.floor(Math.random()*7);
+  gateUrl=url;gateAns=a+b;$('gateq').textContent=`${a} + ${b} = ?`;$('gatein').value='';$('gatemsg').textContent='';
+  $('gate').classList.remove('hidden');$('gatein').focus();
+}
+function closeGate(){$('gate').classList.add('hidden');gateUrl='';}
+function submitGate(){
+  if(Number($('gatein').value)===gateAns&&gateUrl){
+    const u=gateUrl;closeGate();
+    if(u.startsWith('mailto:'))location.href=u;else window.open(u,'_blank','noopener,noreferrer');
+  }else{$('gatemsg').textContent='Буруу байна. Дахин оролдоно уу.';$('gatein').value='';}
+}
+$('gateok').addEventListener('click',submitGate);$('gateno').addEventListener('click',closeGate);
+$('gatein').addEventListener('keydown',e=>{if(e.key==='Enter')submitGate();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('gate').classList.contains('hidden'))closeGate();});
+$('gate').addEventListener('click',e=>{if(e.target===$('gate'))closeGate();});
+$('adWith').addEventListener('click',()=>openGate(AD_CTA.url));
+renderAds();
+setInterval(()=>{if(document.hidden||!$('gate').classList.contains('hidden'))return;adIdx=(adIdx+1)%ADS.length;renderAds();},AD.rotateMs);
+loadWords().then(()=>{updateStats();renderTricky();startRound();});
+})();
+</script>
+</body>
+</html>
